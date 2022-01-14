@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 public class VotoDto {
     
     private Integer nota;
-    private Long idUsuario;
     private Long idFilme;
 
 }

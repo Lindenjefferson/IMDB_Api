@@ -8,10 +8,12 @@ import com.teste.IMDB.Service.FilmeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,28 +27,28 @@ public class FilmeController {
     private FilmeService filmeService;
     
     @PostMapping("save")
-    public ResponseEntity<FilmeDtoOut> save(@RequestBody FilmeDtoIn filme) {
-        return filmeService.save(filme);
+    public ResponseEntity<FilmeDtoOut> save(@RequestBody FilmeDtoIn filme, @RequestHeader HttpHeaders headers) {
+        return filmeService.save(filme, headers);
     }
 
     @GetMapping("filter/page={pag}")
-    public Page<FilmeDtoOut> listByFilterWithPage(@RequestBody FilmeDtoIn filtro, @PathVariable int pag) {
-        return filmeService.listByFilterWithPage(filtro, pag);
+    public ResponseEntity<Page<FilmeDtoOut>> listByFilterWithPage(@RequestBody FilmeDtoIn filtro, @PathVariable int pag, @RequestHeader HttpHeaders headers) {
+        return filmeService.listByFilterWithPage(filtro, pag, headers);
     }
 
     @GetMapping("filter")
-    public List<FilmeDtoOut> listByFilter(@RequestBody FilmeDtoIn filtro) {
-        return filmeService.listByFilter(filtro);
+    public ResponseEntity<List<FilmeDtoOut>> listByFilter(@RequestBody FilmeDtoIn filtro, @RequestHeader HttpHeaders headers) {
+        return filmeService.listByFilter(filtro, headers);
     }
 
     @GetMapping("detail/{id}")
-    public ResponseEntity<FilmeDtoOut> detailFilme(@PathVariable long id) {
-        return filmeService.detailFilme(id);
+    public ResponseEntity<FilmeDtoOut> detailFilme(@PathVariable long id, @RequestHeader HttpHeaders headers) {
+        return filmeService.detailFilme(id, headers);
     }
 
     @GetMapping("orderByRate")
-    public List<FilmeDtoOut> findAllOrderByRate() {
-        return filmeService.findAllOrderByRate();
+    public ResponseEntity<List<FilmeDtoOut>> findAllOrderByRate(@RequestHeader HttpHeaders headers) {
+        return filmeService.findAllOrderByRate(headers);
     }
 
 }
